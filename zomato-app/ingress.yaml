@@ -6,29 +6,26 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"        # Redirect HTTP to HTTPS
-    nginx.ingress.kubernetes.io/auth-type: basic
-    nginx.ingress.kubernetes.io/auth-secret-type: 
-    nginx.ingress.kubernetes.io/auth-secret: my-secret
+    # nginx.ingress.kubernetes.io/auth-type: basic
+    # nginx.ingress.kubernetes.io/auth-secret-type: 
+    # nginx.ingress.kubernetes.io/auth-secret: my-secret
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Proxied-By "nginx";
+      add_header X-Proxy "ingress-controller";
 spec:
+  ingressClassName: nginx
   rules:
-  - host: zomato.example.com     # Hostname-based routing
+  - host: zomato-app.com     # Hostname-based routing
     http:
       paths:
-      - path: /static                # Path-based routing
+      - path: /                # Path-based routing
         pathType: Prefix
         backend:
           service:
-            name: zomato-api-service
-            port:
-              number: 80
-      - path: /app                # Another path routing
-        pathType: Prefix
-        backend:
-          service:
-            name: zomato-web-service
+            name: zomato-app-service
             port:
               number: 80
   tls:
   - hosts:
-    - zomato.example.com
+    - zomato-app.com
     secretName: zomato-tls-secret  # The TLS Secret containing certificate and key
