@@ -6,9 +6,6 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"        # Redirect HTTP to HTTPS
-    # nginx.ingress.kubernetes.io/auth-type: basic
-    # nginx.ingress.kubernetes.io/auth-secret-type: 
-    # nginx.ingress.kubernetes.io/auth-secret: my-secret
     nginx.ingress.kubernetes.io/configuration-snippet: |
       add_header X-Proxied-By "nginx";
       add_header X-Proxy "ingress-controller";
