@@ -26,6 +26,7 @@ This project documents the complete journey of migrating from traditional NGINX 
 │   ├── gatewayapi.yaml               # Gateway resource with HTTP/HTTPS
 │   ├── httproute-by-hostname.yaml    # HTTPRoute for routing
 │   ├── middleware-headers.yaml       # Custom headers middleware
+|   ├──middleware-sslredirect.yaml    # Middleware to redirect all HTTP traffic to HTTPS
 │   └── values.yaml                   # Traefik Helm values
 ```
 
@@ -56,7 +57,19 @@ kubectl apply -f namespace.yaml
 ```bash
 kubectl apply -f ingress.yaml
 ```
+# Kubernetes Gateway API CRDs
 
+The Kubernetes Gateway API is **not installed by default** on Kubernetes. It may become default at some point, but for now, we can install it from the Gateway API SIGs Guide.
+
+> **Important Note:** At the time of this guide, we want to explore as many features as possible. Hence, the **experimental install** is used.
+
+## Installing Gateway API
+
+Run the following command to apply the experimental installation:
+
+```bash
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
+```
 4. **Install Traefik with Gateway API Support**
 
 ```bash
@@ -81,6 +94,9 @@ kubectl apply -f gatewayapi.yaml
 
 # Apply middleware for custom headers
 kubectl apply -f middleware-headers.yaml
+
+#Apply Middleware to redirect all HTTP traffic to HTTPS
+kubectl apply -f middleware-sslredirect.yaml
 
 # Apply HTTPRoute for routing
 kubectl apply -f httproute-by-hostname.yaml
@@ -137,6 +153,9 @@ function Get-IngressAudit {
 
 # Create alias for quick access
 Set-Alias -Name iaudit -Value Get-IngressAudit
+
+#Mark as done
+kubectl label ingress zomato-app-ingress migrated=true -n zomato-app
 ```
 ## ✅ Testing & Validation
 

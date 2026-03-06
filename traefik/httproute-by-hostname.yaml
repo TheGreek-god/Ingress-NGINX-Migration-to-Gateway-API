@@ -18,6 +18,11 @@ spec:
         group: traefik.io
         kind: Middleware
         name: response-headers    # ← MUST match the middleware name above
+    - type: ExtensionRef
+      extensionRef:
+        group: traefik.io
+        kind: Middleware
+        name: redirect-to-https  # <- Add this line
     - type: URLRewrite
       urlRewrite:
         path:
