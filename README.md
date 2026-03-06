@@ -245,7 +245,7 @@ kubectl get httproute -A
 - ✅ **TLS Termination**: Self-signed certificates working for both
 - ✅ **HTTP→HTTPS Redirect**: Automatic redirects configured
 - ✅ **Custom Headers**: X-Proxied-By and X-Proxy headers working
-- ✅ **Path Rewriting**: /api/* routes correctly transformed
+- ✅ **Path Rewriting**: / routes correctly transformed
 - ✅ **Audit Tool**: Custom PowerShell function for quick verification
 - ✅ **Migration Complete**: Feature parity between both implementations
 
